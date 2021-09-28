@@ -1,13 +1,31 @@
 # frozen_string_literal: true
 
 class TreasureHuntController < ApplicationController
-  def calculate_distance
-    render json: { status: :ok, distance: 10 }, status: :ok
+  def distance
+    result = calculate_distance
+
+    if result.success?
+      render json: http_response(:ok, result), status: :ok
+    else
+      render json: http_response(:error, result), status: :bad_request
+    end
   end
 
   private
 
-  def treasure_hunt_param
-    params.permits(:email, current_location: [:longitute, :latitude])
+  def calculate_distance
+    Treasures::CalculateDistance.call(
+      email: params[:email],
+      longitute: params.dig(:current_location, :longitude),
+      latitude: params.dig(:current_location, :latitude)
+    )
+  end
+
+  def http_response(status, result)
+    {
+      status: status,
+      distance: result.distance || -1,
+      error: result.error
+    }
   end
 end
