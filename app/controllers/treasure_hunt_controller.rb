@@ -16,7 +16,7 @@ class TreasureHuntController < ApplicationController
   def calculate_distance
     Treasures::CalculateDistance.call(
       email: params[:email],
-      longitute: params.dig(:current_location, :longitude),
+      longitude: params.dig(:current_location, :longitude),
       latitude: params.dig(:current_location, :latitude)
     )
   end
