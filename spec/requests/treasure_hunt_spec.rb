@@ -10,10 +10,10 @@ describe "TreasureHunts", type: :request do
       let(:params) do
         {
           email: 'test@test.com',
-          current_location: {
-            longitude: '50.051227 N',
-            latitude: '19.945704 E'
-          }
+          current_location: [
+            '51.051227 N',
+            '20.945704 E'
+          ]
         }
       end
 
