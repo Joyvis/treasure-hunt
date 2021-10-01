@@ -12,6 +12,20 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
+  # action mailer configuration
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :address              => ENV['SMTP_HOST'],
+    :port                 => ENV['SMTP_PORT'],
+    :user_name            => ENV['SMTP_USER'],
+    :password             => ENV['SMTP_PASS'],
+    :domain               => ENV['SMTP_HOST'].split('@').last,
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
 
