@@ -6,8 +6,17 @@ class TreasureMailer < ApplicationMailer
     @longitude = ENV['TREASURE_LONGITUDE']
 
     mail(
-      to: 'jjs276@gmail.com',
+      to: params[:email],
       subject: 'Treasure Position'
+    )
+  end
+
+  def found_email
+    @treasure_finder_count = params[:treasure_finder_count]
+
+    mail(
+      to: params[:email],
+      subject: 'Treasure Found'
     )
   end
 end

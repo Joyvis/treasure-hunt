@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(version: 2021_09_25_190641) do
   end
 
   create_table "user_requests", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "latitude", null: false
+    t.string "longitude", null: false
+    t.float "distance", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -27,7 +27,7 @@ module Treasures
           Math.cos(treasure_lat_radius) * Math.sin(delta_lon_radius / 2) ** 2
         c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1 - a))
 
-        EARTH_RADIUS_METERS * c
+        (EARTH_RADIUS_METERS * c).round(2)
       end
 
       def delta_lat_radius
@@ -50,15 +50,15 @@ module Treasures
 
       def position_string_to_decimal(latitude_string, longitude_string)
         longitude_string = longitude_string.split(' ')
-        lon = longitude_string.first
+        lon = longitude_string.first.to_f
         lon = lon * (-1) if longitude_string.last == 'W'
 
 
         latitude_string = latitude_string.split(' ')
-        lat = latitude_string.first
+        lat = latitude_string.first.to_f
         lat = lat * (-1) if latitude_string.last == 'S'
 
-        [lat.to_f, lon.to_f]
+        [lat, lon]
       end
 
 

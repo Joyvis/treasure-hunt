@@ -4,7 +4,8 @@ module Treasures
   class CalculateDistance
     include Interactor::Organizer
 
-    organize CalculateDistanceSteps::CalculateDistance,
+    organize CalculateDistanceSteps::LimitUserRequests,
+             CalculateDistanceSteps::CalculateDistance,
              CalculateDistanceSteps::SendEmailTreasurePosition,
              CalculateDistanceSteps::SendEmailTreasureFound,
              CalculateDistanceSteps::SaveUserRequest
