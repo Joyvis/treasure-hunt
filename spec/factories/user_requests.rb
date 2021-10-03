@@ -6,5 +6,6 @@ FactoryBot.define do
     latitude { '50.051227 N' }
     longitude { '19.945704 E' }
     distance { 10 }
+    created_at { DateTime.now }
   end
 end

@@ -5,9 +5,19 @@ class TreasureHuntController < ApplicationController
     result = calculate_distance
 
     if result.success?
-      render json: http_response(:ok, result), status: :ok
+      render json: distance_response(:ok, result), status: :ok
     else
-      render json: http_response(:error, result), status: :bad_request
+      render json: distance_response(:error, result), status: :bad_request
+    end
+  end
+
+  def analytics
+    result = UserRequests::List.call(analytics_params)
+
+    if result.success?
+      render json: analytics_response(:ok, result.requests), status: :ok
+    else
+      render json: analytics_response(:error), status: :bad_request
     end
   end
 
@@ -16,16 +26,36 @@ class TreasureHuntController < ApplicationController
   def calculate_distance
     Treasures::CalculateDistance.call(
       email: params[:email],
-      longitude: params[:current_location].first,
-      latitude: params[:current_location].last
+      longitude: params[:current_location]&.first,
+      latitude: params[:current_location]&.last
     )
   end
 
-  def http_response(status, result)
+  def distance_response(status, result)
+    response_body = {
+      status: status,
+      distance: result.distance || -1
+    }
+    response_body[:error] = result.error unless status == :ok
+
+    response_body
+  end
+
+  def analytics_response(status, requests = [])
     {
       status: status,
-      distance: result.distance || -1,
-      error: result.error
+      requests: serialize_requests(requests)
     }
+  end
+
+  def analytics_params
+    params.permit(:start_time, :end_time, :radius)
+  end
+
+  def serialize_requests(requests)
+    ActiveModelSerializers::SerializableResource.new(
+      requests,
+      each_serializer: UserRequestsSerializer
+    )
   end
 end
