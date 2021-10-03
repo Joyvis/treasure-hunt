@@ -55,7 +55,7 @@ class TreasureHuntController < ApplicationController
   def serialize_requests(requests)
     ActiveModelSerializers::SerializableResource.new(
       requests,
-      each_serializer: UserRequestsSerializer
+      each_serializer: UserRequestSerializer
     )
   end
 end

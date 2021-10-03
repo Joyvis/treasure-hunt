@@ -13,7 +13,6 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 
 group :development, :test do
   gem 'dotenv-rails'
-  gem 'factory_bot_rails'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-highlight'
@@ -25,6 +24,11 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'rubocop'
   gem 'spring'
+end
+
+group :test do
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

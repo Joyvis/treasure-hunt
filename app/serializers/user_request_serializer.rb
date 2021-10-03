@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserRequestsSerializer < ActiveModel::Serializer
+class UserRequestSerializer < ActiveModel::Serializer
   attributes :email, :current_location
 
   def current_location
